@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt')
 const secretWord = process.env.SECRET_WORD
+const jwt = require('jsonwebtoken')
+const usuarioModel = require('../models/usuario.model')
 
 
-const login = async () =>{
+const login = async (req, res) =>{
     try {
         const {email, password} = req.body;
 
@@ -38,4 +40,8 @@ const login = async () =>{
             error: error.message
         });
     }
+}
+
+module.exports= {
+    login
 }
