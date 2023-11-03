@@ -123,30 +123,31 @@ const updateParcial = async (req, res) => {
 }
 
 const updateCompleto = async (req, res) =>{
-    try{
-        const usuarioId = req.params.id
+    try {
+        const usuarioId = req.params.id;
         const datosActualizar = {
-            ...req.body,
+            nombre: req.body.nombre || null,
+            email: req.body.email || null,
+            password: req.body.password || null,
             updated_at: new Date()
         }
 
-        const usuarioActualizar = usuarioModel.findByIdAndUpdate(usuarioId, datosActualizar)
-
-        if(!usuarioActualizar){
+        const usuarioActualizado = await usuarioModel.findByIdAndUpdate(usuarioId, datosActualizar);
+        
+        if (!usuarioActualizado) {
             return res.status(404).json({
                 message: "usuario no encontrado"
-            })
+            });
         }
 
         return res.status(200).json({
-            message: "usuario actualizado con exito"
-        })
-
-    }catch (error){
+            message: "usuario actualizado exitosamente"
+        });
+    } catch (error) {
         return res.status(500).json({
-            message: "ocurrrio un error al actualizar el usuario",
+            message: "ocurrió un error al editar el usuario",
             error: error.message
-        })
+        });
     }
 }
 
